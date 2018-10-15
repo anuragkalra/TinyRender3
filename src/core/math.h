@@ -116,43 +116,69 @@ namespace Warp {
 
 inline v3f squareToUniformSphere(const p2f& sample) {
     v3f v(0.f);
-	// TODO: Implement this
+	// TODO: Implement this - DONE
+	float z = 1 - 2 * sample.x;
+	float r = std::sqrt(std::max((float) 0, (float) 1 - z * z));
     return v;
 }
 
 inline float squareToUniformSpherePdf() {
-    float pdf = 0.f;
-	// TODO: Implement this
+	// TODO: Implement this - DONE
+    float pdf = INV_FOURPI;
     return pdf;
 }
 
 inline v3f squareToUniformHemisphere(const p2f& sample) {
-    v3f v(0.f);
-	// TODO: Implement this
+	// TODO: Implement this - DONE
+	float z = sample.x;
+	float r = std::sqrt(std::max((float) 0, (float) 1. - z * z));
+	float phi = 2 * M_PI * sample.y;
+	v3f v(r * std::cos(phi), r * std::sin(phi), z);
     return v;
 }
 
 inline float squareToUniformHemispherePdf(const v3f& v) {
-    float pdf = 0.f;
-	// TODO: Implement this
+	// TODO: Implement this - DONE
+	float pdf = INV_TWOPI;
     return pdf;
 }
 
 inline v2f squareToUniformDiskConcentric(const p2f& sample) {
-    v2f v(0.f);
-	// TODO: Implement this (optional)
+	// TODO: Implement this (optional) - DONE
+	//Map uniform random numbers to [-1, 1]^2
+	p2f uOffset = 2.f * sample - v2f(1.0f, 1.0f);
+	//Handle degeneracy at the origin
+	if(uOffset.x == 0 && uOffset.y == 0) {
+	    return v2f(0, 0);
+	}
+	//Apply concentric mapping to point
+    float piOver4 = M_PI * (0.25f);
+	float piOver2 = M_PI * (0.5f);
+	float theta, r;
+	if(std::abs(uOffset.x) > std::abs(uOffset.y)) {
+	    r = uOffset.x;
+	    theta = piOver4 * (uOffset.y / uOffset.x);
+	} else {
+	    r = uOffset.y;
+	    theta = piOver2 - piOver4 * (uOffset.x / uOffset.y);
+	}
+	v2f v(r * std::cos(theta), r * std::sin(theta));
     return v;
 }
 
 inline v3f squareToCosineHemisphere(const p2f& sample) {
-    v3f v(0.f);
-	// TODO: Implement this
+	// TODO: Implement this - DONE
+	p2f d = squareToUniformDiskConcentric(sample);
+	float z = std::sqrt(std::max((float) 0, 1 - d.x * d.x - d.y * d.y));
+	v3f v(d.x, d.y, z);
     return v;
 }
 
 inline float squareToCosineHemispherePdf(const v3f& v) {
     float pdf = 0.f;
 	// TODO: Implement this
+    // TODO: need to compute cosTheta
+    //return cosTheta * INV_PI;
     return pdf;
 }
 
