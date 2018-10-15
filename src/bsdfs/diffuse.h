@@ -35,7 +35,20 @@ struct DiffuseBSDF : BSDF {
     v3f eval(const SurfaceInteraction& i) const override {
         v3f val(0.f);
 	    // TODO: Add previous assignment code (if needed)
-        return val;
+	    // In TinyRender, the albedo rho of a diffuse BRDF is casted as a constant 2D texture
+	    // which allows for better integration with Bitmap textures.
+	    // albedo->eval(worldData, i) returns the albedo at surface interaction point i
+	    // 1. Check that the incoming and outgoing rays are headed in the correct
+	    //    directions, if not return black
+	    // 2. Otherwise return the evaluated albedo dived by pi, and multiplied
+	    //    by the cosine factor cos theta_i
+
+	    // Use the Frame::cosTheta() function on i.wo and i.wi to perform checks
+	    if(Frame::cosTheta(i.wo) <= 0 || Frame::cosTheta(i.wi) <= 0) {
+	        return val;
+	    }
+
+	    return albedo->eval(worldData, i) * INV_PI * Frame::cosTheta(i.wo);
     }
 
     float pdf(const SurfaceInteraction& i) const override {

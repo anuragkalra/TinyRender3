@@ -178,6 +178,7 @@ inline float squareToCosineHemispherePdf(const v3f& v) {
     float pdf = 0.f;
 	// TODO: Implement this
     // TODO: need to compute cosTheta
+    //pdf = Frame::cosTheta(v) * INV_PI;
     //return cosTheta * INV_PI;
     return pdf;
 }
