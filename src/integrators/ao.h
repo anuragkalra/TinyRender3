@@ -29,6 +29,17 @@ struct AOIntegrator : Integrator {
 	    //4. When computing the contribution of each MC sample to the final integral
 	    //   estimate, don't forget to evaluate all the integrand terms and to divide
 	    //   by the appropriate PDF evaluation
+
+	    //NOTES
+	    //->To avoid shadow ray problem (described in handout), set the maximum shadow ray length
+	    //  to half of the bounding sphere radius. Use scene.aabb.getBSphere() to retrieve the
+	    //  sphere and its corresponding radius.
+
+	    //->The albedo is commonly set to 1.0 for AO (and RO).
+
+	    //->Visually benchmark using cbox scene using each of the three sampling methods. Use 16 spp.
+	    //->Can control the MC sampling rate as a parameter of the integrator, looping and averaging
+	    //  over your samples directly in the integrator.
         return Li;
     }
 };
