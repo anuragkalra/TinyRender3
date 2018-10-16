@@ -158,7 +158,7 @@ struct SSAOPass : RenderPass {
          * 1) Bind the GBuffer.
          */
 	    // TODO: Implement this
-	    //glBindFrameBuffer()
+        glBindFramebuffer(GL_FRAMEBUFFER, gbuffer);
         
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -177,13 +177,16 @@ struct SSAOPass : RenderPass {
          * 5) Unbind the vertex array.
          */
 	    // TODO: Implement this
+	    glUseProgram(geometryShader);
+
         
         // II. SSAO pass
         // =======================================================================================
         /**
          * 1) Bind the screen buffer (postprocess_fboScreen).
          */
-	    // TODO: Implement this
+	    // TODO: Implement this - COMPLETE
+        glBindFramebuffer(GL_FRAMEBUFFER, postprocess_fboScreen);
         
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
