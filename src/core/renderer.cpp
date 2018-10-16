@@ -131,25 +131,33 @@ void Renderer::render() {
         //Clear rgb buffer and instantiate sampler
         integrator->rgb->clear();
         Sampler sampler = Sampler(260631195);
+        Sampler sampler2 = Sampler(123);
+
 
         int pixelX = 0;
         int pixelY = 0;
 
         for(pixelX = 0; pixelX < scene.config.width; pixelX++) {
             for(pixelY = 0; pixelY < scene.config.height; pixelY++) {
-                cout << "X: " << pixelX << "    " << "Y: " << pixelY << endl;
-
-                float pixelNDCX = (pixelX + 0.5) / (float) scene.config.width;  //[0, 1]
-                float pixelNDCY = (pixelY + 0.5) / (float) scene.config.height; //[0, 1]
-                float pixelScreenX = 2 * pixelNDCX - 1;     //[-1, 1]
-                float pixelScreenY = 1 - 2 * pixelNDCY;     //[-1, 1]
-                float pixelCameraX = (pixelScreenX) * aspectRatio * scale; //[-aspectRatio*scale, aspectRatio*scale]
-                float pixelCameraY = (pixelScreenY) * scale;    //[-scale, scale]
-                v3f dir = v3f(pixelCameraX, pixelCameraY, -1.f);
-                v4f direction = glm::normalize(v4f(dir, 0.f) * inverseView);
-                Ray ray = Ray(scene.config.camera.o, direction);
-                v3f color = integrator->render(ray, sampler);
-                integrator->rgb->data[scene.config.width * pixelY + pixelX] = color;
+                //cout << "X: " << pixelX << "    " << "Y: " << pixelY << endl;
+                v3f colors = v3f(0.0f);
+                int i;
+                for(i = 0; i < scene.config.spp; i++){  //anti-aliasing component - implementation of A1 bonus
+                    float randomX = sampler.next();
+                    float randomY = sampler2.next();
+                    float pixelNDCX = (pixelX + randomX) / (float) scene.config.width;  //[0, 1]
+                    float pixelNDCY = (pixelY + randomY) / (float) scene.config.height; //[0, 1]
+                    float pixelScreenX = 2 * pixelNDCX - 1;     //[-1, 1]
+                    float pixelScreenY = 1 - 2 * pixelNDCY;     //[-1, 1]
+                    float pixelCameraX = (pixelScreenX) * aspectRatio * scale; //[-aspectRatio*scale, aspectRatio*scale]
+                    float pixelCameraY = (pixelScreenY) * scale;    //[-scale, scale]
+                    v3f dir = v3f(pixelCameraX, pixelCameraY, -1.f);
+                    v4f direction = glm::normalize(v4f(dir, 0.f) * inverseView);
+                    Ray ray = Ray(scene.config.camera.o, direction);
+                    v3f color = integrator->render(ray, sampler);
+                    colors += color;
+                }
+                integrator->rgb->data[scene.config.width * pixelY + pixelX] = (colors / (float) scene.config.spp);
             }
         }
     }
