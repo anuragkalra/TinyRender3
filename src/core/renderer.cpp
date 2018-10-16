@@ -137,6 +137,8 @@ void Renderer::render() {
 
         for(pixelX = 0; pixelX < scene.config.width; pixelX++) {
             for(pixelY = 0; pixelY < scene.config.height; pixelY++) {
+                cout << "X: " << pixelX << "    " << "Y: " << pixelY << endl;
+
                 float pixelNDCX = (pixelX + 0.5) / (float) scene.config.width;  //[0, 1]
                 float pixelNDCY = (pixelY + 0.5) / (float) scene.config.height; //[0, 1]
                 float pixelScreenX = 2 * pixelNDCX - 1;     //[-1, 1]

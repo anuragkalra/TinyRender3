@@ -119,7 +119,8 @@ inline v3f squareToUniformSphere(const p2f& sample) {
 	// TODO: Implement this - DONE
 	float z = 1 - 2 * sample.x;
 	float r = std::sqrt(std::max((float) 0, (float) 1 - z * z));
-    return v;
+	float phi = 2 * M_PI * sample.y;
+    return v3f(r * std::cos(phi), r * std::sin(phi), z);
 }
 
 inline float squareToUniformSpherePdf() {
