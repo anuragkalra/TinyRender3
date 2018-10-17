@@ -1,14 +1,12 @@
 #version 330 core
 
 layout(location = 0) in vec3 position;
-layout(location = 1) in vec3 uv;
+layout(location = 1) in vec2 uv;
 
-out vec3 vNormal;
-//out screen-space texture coordinates (?)
-//out world-space positions (?)
+out vec2 texCoords;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(position, 1.0);
-	vNormal = abs(normal);
+    texCoords = uv;
+    gl_Position = vec4(position, 1.0f);
 }

@@ -28,9 +28,6 @@ struct SSAOPass : RenderPass {
 
     GLuint uvAttrib{1};
 
-    GLuint modelMatUniform{0};
-    GLuint viewMatUniform{0};
-    GLuint projectionMatUniform{0};
 
     explicit SSAOPass(const Scene& scene) : RenderPass(scene) { }
 
@@ -54,10 +51,6 @@ struct SSAOPass : RenderPass {
         glDeleteShader(vs);
         glDeleteShader(fs);
 
-        // Create uniforms - COMPLETE
-        modelMatUniform = GLuint(glGetUniformLocation(geometryShader, "model"));
-        viewMatUniform = GLuint(glGetUniformLocation(geometryShader, "view"));
-        projectionMatUniform = GLuint(glGetUniformLocation(geometryShader, "projection"));
 
         // Create position texture (GBuffer)
         glGenTextures(1, &texturePosition);
@@ -190,15 +183,23 @@ struct SSAOPass : RenderPass {
 	    // TODO: Implement this - COMPLETE
 	    glUseProgram(geometryShader);
 
+	    //Sets up uniforms
+	    GLuint modelMatUniform = GLuint(glGetUniformLocation(geometryShader, "model"));
+        GLuint viewMatUniform = GLuint(glGetUniformLocation(geometryShader, "view"));
+        GLuint projectionMatUniform = GLuint(glGetUniformLocation(geometryShader, "projection"));
+
         glUniformMatrix4fv(modelMatUniform, 1, GL_FALSE, &(modelMat[0][0]));
         glUniformMatrix4fv(viewMatUniform, 1, GL_FALSE, &(view[0][0]));
         glUniformMatrix4fv(projectionMatUniform, 1, GL_FALSE, &(projection[0][0]));
 
 	    for(auto& object : objects) {
+
             glBindVertexArray(object.vao);
             glDrawArrays(GL_TRIANGLES, 0, object.nVerts);
             glBindVertexArray(0);
 	    }
+
+	    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         
         // II. SSAO pass
@@ -216,7 +217,7 @@ struct SSAOPass : RenderPass {
         /**
          * 1) Use the shader for the SSAO pass. - COMPLETE
          * 2) Pass the necessary uniforms.
-         * 3) Bind the textures for position and normal from the GBuffer.
+         * 3) Bind the textures for position and normal from the GBuffer. - COMPLETE
          * 4) Bind vertex array of the quad representing the screen texture.
          * 5) Draw the quad.
          * 6) Unbind the vertex array.
@@ -226,6 +227,25 @@ struct SSAOPass : RenderPass {
 
         glUseProgram(shaderSSAO);
 
+        modelMatUniform = GLuint(glGetUniformLocation(shaderSSAO, "model"));
+        viewMatUniform = GLuint(glGetUniformLocation(shaderSSAO, "view"));
+        projectionMatUniform = GLuint(glGetUniformLocation(shaderSSAO, "projection"));
+
+        glUniformMatrix4fv(modelMatUniform, 1, GL_FALSE, &(modelMat[0][0]));
+        glUniformMatrix4fv(viewMatUniform, 1, GL_FALSE, &(view[0][0]));
+        glUniformMatrix4fv(projectionMatUniform, 1, GL_FALSE, &(projection[0][0]));
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texturePosition);
+        glUniform1i(GLuint(glGetUniformLocation(shaderSSAO, "texturePosition")), 0);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, textureNormal);
+        glUniform1i(GLuint(glGetUniformLocation(shaderSSAO, "textureNormal")), 1);
+
+        glBindVertexArray(quadVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
         
         RenderPass::render();
     }

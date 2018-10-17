@@ -90,23 +90,48 @@ void main()
     setRNGSeed();
 
     /**
-    * 1) Get the position and normal of the shading point (screen space) from the GBuffer.
+    * 1) Get the position and normal of the shading point (screen space) from the GBuffer. - COMPLETE
     */
+    vec3 pos = texture(texturePosition, texCoords).xyz;
+    vec3 normal = texture(textureNormal, texCoords).xyz;
 
     /**
-    * 1) Build the shading normal's frame (TBN).
+    * 1) Build the shading normal's frame (TBN). - COMPLETE
          ( use getTangent() )
     */
+    vec3 tangent = getTangent(normal);
+    vec3 bitangent = cross(normal, tangent);
+    mat3 TBN = mat3(tangent, bitangent, normal);
 
     /**
     For each sample:
-    * 1) Get a sample direction (view space).
-    * 2) Align the sample hemisphere to the shading normal.
-    * 3) Place the sample at the shading point (use the RADIUS constant).
-    * 4) Get the depth value at the sample's position using the depth buffer.
-    *    - Project the sample to screen space ie. pixels (NDC).
-    *    - Transform the sample in NDC coordinates [-1,1] to texture coordinates [0,1].
+    * 1) Get a sample direction (view space). - COMPLETE
+    * 2) Align the sample hemisphere to the shading normal. - COMPLETE
+    * 3) Place the sample at the shading point (use the RADIUS constant). - COMPLETE
+    * 4) Get the depth value at the sample's position using the depth buffer. - COMPLETE
+    *    - Project the sample to screen space ie. pixels (NDC). - COMPLETE
+    *    - Transform the sample in NDC coordinates [-1,1] to texture coordinates [0,1]. - COMPLETE
     * 5) Check for occlusion using the sample's depth value and the depth value at the sample's position.
          (use some epsilon via the BIAS constant)
     */
+
+    float occlusion = 0.0;
+    float sum = 0;
+    int i;
+    for(i = 0; i < N_SAMPLES; i++){
+        vec3 w_i = squareToUniformHemisphere();
+        w_i = TBN * w_i;    //from tangent to view space
+        vec3 y = pos + RADIUS * w_i;    //y = x + beta * w_i
+        vec4 offset = vec4(y, 1.0);
+        offset = projection * offset;   //projection... transform the sample to screen space (NDC)
+        offset.xyz /= offset.w;     //perspective divide
+        offset.xyz = offset.xyz * (0.5) + (0.5);    //transform to [0,1]
+
+        float sampleDepth = texture(texturePosition, offset.xy).z;
+        float dot = dot(w_i, normal);
+        float pdf = squareToUniformHemispherePdf();
+        occlusion = (sampleDepth >= y.z + BIAS ? 0.0 : 1.0);
+        sum += occlusion*dot/pdf;
+    }
+    color = vec3(sum * INV_PI / N_SAMPLES);
 }
