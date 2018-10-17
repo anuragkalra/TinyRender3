@@ -25,8 +25,6 @@ struct AOIntegrator : Integrator {
 
         int sampleCount = 16;
         float maxShadowRayLength = scene.aabb.getBSphere().radius * (0.5f);
-        float albedo = 1.0f;
-	    // TODO: Implement this
 
 	    //1. Intersect your eye rays with the scene geometry
         SurfaceInteraction si_initial = SurfaceInteraction();
@@ -40,11 +38,13 @@ struct AOIntegrator : Integrator {
         //uniform sphere assumed
         //only runs integration loop if there is a hit.
         if(hit){
+            //TODO: add logic to use correct sampling method as specified by importanceSamplingScheme
             v3f direction = Warp::squareToUniformSphere(sample);    //3d direction vector on a sphere
             direction = si_initial.frameNs.toWorld(direction);  //transform direction from local frame to world frame
             Ray ray2 = Ray(si_initial.p, direction, Epsilon, maxShadowRayLength); //build ray originating at current surface interaction and in direction from sphere
             if(!scene.bvh->intersect(ray2, si_initial)) {
                 float dot = glm::dot(direction, si_initial.frameNs.n);   //cos(theta_i)
+                //TODO: add logic to use correct pdf as specified by importanceSamplingScheme
                 float pdf = Warp::squareToUniformSpherePdf();
                 Li += glm::max(0.f, dot/pdf);
             }

@@ -111,7 +111,7 @@ void main()
     * 4) Get the depth value at the sample's position using the depth buffer. - COMPLETE
     *    - Project the sample to screen space ie. pixels (NDC). - COMPLETE
     *    - Transform the sample in NDC coordinates [-1,1] to texture coordinates [0,1]. - COMPLETE
-    * 5) Check for occlusion using the sample's depth value and the depth value at the sample's position.
+    * 5) Check for occlusion using the sample's depth value and the depth value at the sample's position. - COMPLETE
          (use some epsilon via the BIAS constant)
     */
 
@@ -122,15 +122,19 @@ void main()
         vec3 w_i = squareToUniformHemisphere();
         w_i = TBN * w_i;    //from tangent to view space
         vec3 y = pos + RADIUS * w_i;    //y = x + beta * w_i
+        //Bonus - TODO
+
+
         vec4 offset = vec4(y, 1.0);
         offset = projection * offset;   //projection... transform the sample to screen space (NDC)
         offset.xyz /= offset.w;     //perspective divide
         offset.xyz = offset.xyz * (0.5) + (0.5);    //transform to [0,1]
 
         float sampleDepth = texture(texturePosition, offset.xy).z;
+        occlusion = (sampleDepth >= y.z + BIAS ? 0.0 : 1.0);
         float dot = dot(w_i, normal);
         float pdf = squareToUniformHemispherePdf();
-        occlusion = (sampleDepth >= y.z + BIAS ? 0.0 : 1.0);
+
         sum += occlusion*dot/pdf;
     }
     color = vec3(sum * INV_PI / N_SAMPLES);
