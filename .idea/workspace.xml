@@ -12,8 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24f34df4-5a1b-4985-9007-348ec01bbdeb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tinyrender.dir/src/core/renderer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tinyrender.dir/src/core/renderer.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/tinyrender" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tinyrender" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a3/cbox/tinyrender/cbox_ao_offline.exr" beforeDir="false" afterPath="$PROJECT_DIR$/data/a3/cbox/tinyrender/cbox_ao_offline.exr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a3/spaceship/tinyrender/spaceship_ao_offline.exr" beforeDir="false" afterPath="$PROJECT_DIR$/data/a3/spaceship/tinyrender/spaceship_ao_offline.exr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/integrators/ao.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/integrators/ao.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shaders/ssao.fs" beforeDir="false" afterPath="$PROJECT_DIR$/src/shaders/ssao.fs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,10 +66,10 @@
     <session id="411487435">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.3" value="2" />
-          <entry key="project.open.time.4" value="3" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.4" value="4" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -73,7 +77,7 @@
           <entry key="cpp" value="8" />
           <entry key="exr" value="3" />
           <entry key="fs" value="19" />
-          <entry key="h" value="68" />
+          <entry key="h" value="69" />
           <entry key="mtl" value="2" />
           <entry key="obj" value="2" />
           <entry key="toml" value="12" />
@@ -82,7 +86,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="ObjectiveC" value="77" />
+          <entry key="ObjectiveC" value="78" />
           <entry key="PLAIN_TEXT" value="36" />
           <entry key="TOML file" value="12" />
         </counts>
@@ -91,7 +95,7 @@
         <counts>
           <entry key="cpp" value="441" />
           <entry key="fs" value="1143" />
-          <entry key="h" value="6002" />
+          <entry key="h" value="6711" />
           <entry key="toml" value="2" />
           <entry key="vs" value="261" />
         </counts>
@@ -99,7 +103,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Doxygen file" value="3" />
-          <entry key="ObjectiveC" value="7566" />
+          <entry key="ObjectiveC" value="8275" />
           <entry key="PLAIN_TEXT" value="278" />
           <entry key="TOML file" value="2" />
         </counts>
@@ -108,20 +112,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/math.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-470">
-              <caret line="131" column="26" selection-start-line="131" selection-start-column="26" selection-end-line="131" selection-end-column="26" />
+            <state relative-caret-position="475">
+              <caret line="177" column="49" selection-start-line="177" selection-start-column="49" selection-end-line="177" selection-end-column="49" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/integrators/ao.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="465">
+              <caret line="40" column="13" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -138,7 +142,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/shaders/ssao.fs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
+            <state relative-caret-position="1921">
               <caret line="113" column="116" selection-start-line="113" selection-start-column="116" selection-end-line="113" selection-end-column="116" />
             </state>
           </provider>
@@ -196,7 +200,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1680" />
     <option name="height" value="981" />
@@ -356,12 +360,13 @@
       <workItem from="1539569345751" duration="6294000" />
       <workItem from="1539624416245" duration="2088000" />
       <workItem from="1539633951242" duration="21811000" />
-      <workItem from="1539730813923" duration="11323000" />
+      <workItem from="1539730813923" duration="11510000" />
+      <workItem from="1539795109545" duration="3994000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41748000" />
+    <option name="totallyTimeSpent" value="45929000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -373,15 +378,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="981" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="981" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23321123" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23565324" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32845894" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.16310461" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.16310461" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.22609673" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -556,13 +561,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/platform.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/a3/cbox/tinyrender/cbox_ao_offline.toml">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -598,9 +596,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-274">
           <caret line="39" column="36" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="36" />
-          <folding>
-            <element signature="e#1480#1743#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -627,22 +622,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shaders/ssao.fs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
+        <state relative-caret-position="1921">
           <caret line="113" column="116" selection-start-line="113" selection-start-column="116" selection-end-line="113" selection-end-column="116" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/integrators/ao.h">
+    <entry file="file://$PROJECT_DIR$/src/core/platform.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="243">
+          <caret line="58" column="19" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/core/math.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-470">
-          <caret line="131" column="26" selection-start-line="131" selection-start-column="26" selection-end-line="131" selection-end-column="26" />
+        <state relative-caret-position="475">
+          <caret line="177" column="49" selection-start-line="177" selection-start-column="49" selection-end-line="177" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/integrators/ao.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="40" column="13" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
         </state>
       </provider>
     </entry>

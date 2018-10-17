@@ -21,31 +21,45 @@ struct AOIntegrator : Integrator {
         //0 => Uniform Spherical Direction Sampling
         //1 => Uniform Hemispherical Directional Sampling
         //2 => Cosine-weighted Hemispherical Direction Sampling
-        int importanceSamplingScheme = 0;
+        int importanceSamplingScheme = 1;
 
         int sampleCount = 16;
         float maxShadowRayLength = scene.aabb.getBSphere().radius * (0.5f);
 
-	    //1. Intersect your eye rays with the scene geometry
         SurfaceInteraction si_initial = SurfaceInteraction();
-
-        //2. If there's an intersection i, solve for the appropriate Monte Carlo
-	    //   AO estimate at this shade point: you can sample directions in your
-	    //   MC estimator using the sampling routines you developed earlier.
 
         bool hit = scene.bvh->intersect(ray, si_initial);   //does ray intersect the scene
         v2f sample = sampler.next2D(); //2d sample from [0, 1] ^ 2
-        //uniform sphere assumed
-        //only runs integration loop if there is a hit.
+
         if(hit){
-            //TODO: add logic to use correct sampling method as specified by importanceSamplingScheme
-            v3f direction = Warp::squareToUniformSphere(sample);    //3d direction vector on a sphere
+            v3f direction;
+            if(importanceSamplingScheme == 0) { //Uniform Spherical Direction Sampling
+                direction = Warp::squareToUniformSphere(sample);
+            }
+            if (importanceSamplingScheme == 1) {    //Uniform Hemisphere Direction Sampling
+                direction = Warp::squareToUniformHemisphere(sample);
+            }
+            if (importanceSamplingScheme == 2){     //Cosine Hemisphere Sampling
+                direction = Warp::squareToCosineHemisphere(sample);
+            }
+
             direction = si_initial.frameNs.toWorld(direction);  //transform direction from local frame to world frame
             Ray ray2 = Ray(si_initial.p, direction, Epsilon, maxShadowRayLength); //build ray originating at current surface interaction and in direction from sphere
             if(!scene.bvh->intersect(ray2, si_initial)) {
                 float dot = glm::dot(direction, si_initial.frameNs.n);   //cos(theta_i)
-                //TODO: add logic to use correct pdf as specified by importanceSamplingScheme
-                float pdf = Warp::squareToUniformSpherePdf();
+                float pdf;
+                if(importanceSamplingScheme == 0) { //Uniform Spherical PDF
+                    pdf = Warp::squareToUniformSpherePdf();
+                }
+                if(importanceSamplingScheme == 1) { //Uniform Hemisphere PDF
+                    v3f dummy;
+                    pdf = Warp::squareToUniformHemispherePdf(dummy);
+                }
+                //TODO: squareToCosineHemispherePdf() needs to be implemented
+                if(importanceSamplingScheme == 2) {   //Cosine Hemisphere PDF
+                    v3f dummy2;
+                    pdf = Warp::squareToCosineHemispherePdf(dummy2);
+                }
                 Li += glm::max(0.f, dot/pdf);
             }
         }
