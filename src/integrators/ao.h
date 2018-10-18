@@ -21,7 +21,7 @@ struct AOIntegrator : Integrator {
         //0 => Uniform Spherical Direction Sampling
         //1 => Uniform Hemispherical Directional Sampling
         //2 => Cosine-weighted Hemispherical Direction Sampling
-        int importanceSamplingScheme = 1;
+        int importanceSamplingScheme = 2;
 
         int sampleCount = 16;
         float maxShadowRayLength = scene.aabb.getBSphere().radius * (0.5f);
@@ -44,7 +44,9 @@ struct AOIntegrator : Integrator {
             }
 
             direction = si_initial.frameNs.toWorld(direction);  //transform direction from local frame to world frame
-            Ray ray2 = Ray(si_initial.p, direction, Epsilon, maxShadowRayLength); //build ray originating at current surface interaction and in direction from sphere
+
+            //build ray originating at current surface interaction and in direction from sampler
+            Ray ray2 = Ray(si_initial.p, direction, Epsilon, maxShadowRayLength);
             if(!scene.bvh->intersect(ray2, si_initial)) {
                 float dot = glm::dot(direction, si_initial.frameNs.n);   //cos(theta_i)
                 float pdf;
@@ -55,7 +57,6 @@ struct AOIntegrator : Integrator {
                     v3f dummy;
                     pdf = Warp::squareToUniformHemispherePdf(dummy);
                 }
-                //TODO: squareToCosineHemispherePdf() needs to be implemented
                 if(importanceSamplingScheme == 2) {   //Cosine Hemisphere PDF
                     v3f dummy2;
                     pdf = Warp::squareToCosineHemispherePdf(dummy2);

@@ -167,6 +167,14 @@ struct Frame {
 /**
  * Intersection hit structure.
  * Stores hit point incoming/outgoing directions, normal frame, geometry info, etc.
+ * p: point of intersection (in world space)
+ * wo, wi: outgoing and incoming direction at hit point
+ * t: length between initial ray origin and hit point
+ * u, v: uv-coordinates at hit point (useful when mapping textures onto meshes)
+ * shapeID: index of the hit shape in the scene (e.g. bunny has index 0, backwall has index 1)
+ * primID: triangle index at hit point
+ * frameNg, frameNs: geometric and shading frame, respectively
+ * matID: index of material associated to shape
  */
 struct SurfaceInteraction {
     v3f p, wo, wi;

@@ -28,6 +28,18 @@ struct ROIntegrator : Integrator {
     v3f render(const Ray& ray, Sampler& sampler) const override {
         v3f Li(0.f);
 	    // TODO: Implement this
+	    int sampleCount = 16;
+        SurfaceInteraction si_initial = SurfaceInteraction();
+        bool hit = scene.bvh->intersect(ray, si_initial);
+
+        if(hit){
+            SurfaceInteraction si_shadow = SurfaceInteraction();
+            p2f sample = sampler.next2D();
+            v3f direction;
+            v3f rDirection;
+            //direction = Warp::squareToPhongLobe(sample);
+            //rDirection = reflect(direction);
+        }
         return Li;
     }
 };

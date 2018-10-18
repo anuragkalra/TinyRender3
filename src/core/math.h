@@ -177,16 +177,20 @@ inline v3f squareToCosineHemisphere(const p2f& sample) {
 
 inline float squareToCosineHemispherePdf(const v3f& v) {
     float pdf = 0.f;
-	// TODO: Implement this
-    // TODO: need to compute cosTheta
-    //pdf = Frame::cosTheta(v) * INV_PI;
-    //return cosTheta * INV_PI;
+	// TODO: Implement this - DONE
+    float cosTheta = cos(v.y);
+    pdf = cosTheta * INV_PI;
     return pdf;
 }
 
-inline v3f squareToPhongLobe(const p2f& sample) {
+inline v3f squareToPhongLobe(const p2f& sample, int n) {
     v3f v(0.f);
-	// TODO: Implement this
+	// TODO: Implement this - DONE
+	float xP = sample.x;
+	float yP = sample.y;
+    float theta = acos(pow((1 - xP), 1.0f / (n + 2)));
+    float phi = 2 * M_PI * yP;
+    v = v3f(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
     return v;
 }
 
